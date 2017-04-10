@@ -124,7 +124,7 @@ public class DataStructureTester extends Application {
          */
         MenuItem miGenerateIntegers = new MenuItem("Generate Integers");
         miGenerateIntegers.setOnAction(e -> {
-            for (int i = 0; i < 1000; i++) {
+            for (int i = 0; i < 10000; i++) {
                 taData.appendText("" + i + "\n");
             }
         });
@@ -160,7 +160,9 @@ public class DataStructureTester extends Application {
             MyTimer.startMicroTime();
             bubbleSort(nums, "D");
             taStatus.appendText("\nSort finished in " + MyTimer.stopMicroTime() + "us");
+            MyTimer.startMicroTime();
             taData.setText(intArray2Text(nums));
+            taStatus.appendText("\nArray to text finished in " + MyTimer.stopMicroTime() + "us");
         });
         sortMenu.getItems().add(miBubbleSortDsc);
 
