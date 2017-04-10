@@ -19,6 +19,7 @@ import javafx.scene.control.TextArea;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
+import static sort.SimpleSorts.bubbleSort;
 
 /**
  * A JavaFX 8 program to help experiment with data structures and algorithms.
@@ -139,11 +140,29 @@ public class DataStructureTester extends Application {
          * *********************************************************************
          * Sort Menu Section
          */
-        MenuItem miSelectionSortAsc = new MenuItem("Selection Sort Ascending");
-        sortMenu.getItems().add(miSelectionSortAsc);
+        MenuItem miBubbleSortAsc = new MenuItem("Bubble Sort Ascending");
+        miBubbleSortAsc.setOnAction(e -> {
+            MyTimer.startMicroTime();
+            int[] nums = text2IntArray(taData.getText());
+            taStatus.setText("Converting text to array took " + MyTimer.stopMicroTime() + "us");
+            MyTimer.startMicroTime();
+            bubbleSort(nums, "A");
+            taStatus.appendText("\nSort finished in " + MyTimer.stopMicroTime() + "us");
+            taData.setText(intArray2Text(nums));
+        });
+        sortMenu.getItems().add(miBubbleSortAsc);
 
-        MenuItem miSelectionSortDsc = new MenuItem("Selection Sort Descending");
-        sortMenu.getItems().add(miSelectionSortDsc);
+        MenuItem miBubbleSortDsc = new MenuItem("Bubble Sort Descending");
+        miBubbleSortDsc.setOnAction(e -> {
+            MyTimer.startMicroTime();
+            int[] nums = text2IntArray(taData.getText());
+            taStatus.setText("Converting text to array took " + MyTimer.stopMicroTime() + "us");
+            MyTimer.startMicroTime();
+            bubbleSort(nums, "D");
+            taStatus.appendText("\nSort finished in " + MyTimer.stopMicroTime() + "us");
+            taData.setText(intArray2Text(nums));
+        });
+        sortMenu.getItems().add(miBubbleSortDsc);
 
         MenuItem miMergeSortAsc = new MenuItem("Merge Sort Ascending");
         sortMenu.getItems().add(miMergeSortAsc);
@@ -205,8 +224,9 @@ public class DataStructureTester extends Application {
         }
     }
 
-    public static int[] text2IntArray(String s, int n) {
+    public static int[] text2IntArray(String s) {
         Scanner sc = new Scanner(s);
+        int n = s.split("\n").length;
         int[] nums = new int[n];
         for (int i = 0; sc.hasNextInt(); i++) {
             nums[i] = sc.nextInt();
