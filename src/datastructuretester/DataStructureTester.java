@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.Random;
 import java.util.Scanner;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -124,15 +125,29 @@ public class DataStructureTester extends Application {
          */
         MenuItem miGenerateIntegers = new MenuItem("Generate Integers");
         miGenerateIntegers.setOnAction(e -> {
+//            for (int i = 0; i < 10000; i++) {
+//                taData.appendText("" + i + "\n");
+//            }
+            StringBuilder sb = new StringBuilder();
+            String newLine = "\n";
             for (int i = 0; i < 10000; i++) {
-                taData.appendText("" + i + "\n");
+                sb.append(i).append(newLine);
             }
+            taData.setText(sb.toString());
         });
         dataMenu.getItems().add(miGenerateIntegers);
 
         MenuItem miRandom = new MenuItem("Randomize Data");
         miRandom.setOnAction(e -> {
-
+            int[] nums = text2IntArray(taData.getText());
+            Random gen = new Random();
+            for (int i = 0; i < nums.length; i++) {
+                int temp = nums[i];
+                int j = gen.nextInt(nums.length);
+                nums[i] = nums[j];
+                nums[j] = temp;
+            }
+            taData.setText(intArray2Text(nums));
         });
         dataMenu.getItems().add(miRandom);
 
