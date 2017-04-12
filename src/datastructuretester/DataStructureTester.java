@@ -20,7 +20,10 @@ import javafx.scene.control.TextArea;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
+import search.Searching;
+import static sort.ComplexSort.mergeSort;
 import static sort.SimpleSorts.bubbleSort;
+import static sort.SimpleSorts.selectionSort;
 
 /**
  * A JavaFX 8 program to help experiment with data structures and algorithms.
@@ -180,8 +183,43 @@ public class DataStructureTester extends Application {
             taStatus.appendText("\nArray to text finished in " + MyTimer.stopMicroTime() + "us");
         });
         sortMenu.getItems().add(miBubbleSortDsc);
+        
+        MenuItem miSelectionSortAsc = new MenuItem("Selection Sort Ascending");
+        miSelectionSortAsc.setOnAction(e -> {
+            MyTimer.startMicroTime();
+            int[] nums = text2IntArray(taData.getText());
+            taStatus.setText("Converting text to array took " + MyTimer.stopMicroTime() + "us");
+            MyTimer.startMicroTime();
+            selectionSort(nums, "A");
+            taStatus.appendText("\nSort finished in " + MyTimer.stopMicroTime() + "us");
+            taData.setText(intArray2Text(nums));
+        });
+        sortMenu.getItems().add(miSelectionSortAsc);
+
+        MenuItem miSelectionSortDsc = new MenuItem("Selection Sort Descending");
+        miSelectionSortDsc.setOnAction(e -> {
+            MyTimer.startMicroTime();
+            int[] nums = text2IntArray(taData.getText());
+            taStatus.setText("Converting text to array took " + MyTimer.stopMicroTime() + "us");
+            MyTimer.startMicroTime();
+            selectionSort(nums, "D");
+            taStatus.appendText("\nSort finished in " + MyTimer.stopMicroTime() + "us");
+            MyTimer.startMicroTime();
+            taData.setText(intArray2Text(nums));
+            taStatus.appendText("\nArray to text finished in " + MyTimer.stopMicroTime() + "us");
+        });
+        sortMenu.getItems().add(miSelectionSortDsc);
 
         MenuItem miMergeSortAsc = new MenuItem("Merge Sort Ascending");
+        miMergeSortAsc.setOnAction(e -> {
+            MyTimer.startMicroTime();
+            int[] nums = text2IntArray(taData.getText());
+            taStatus.setText("Converting text to array took " + MyTimer.stopMicroTime() + "us");
+            MyTimer.startMicroTime();
+            mergeSort(nums, "A");
+            taStatus.appendText("\nSort finished in " + MyTimer.stopMicroTime() + "us");
+            taData.setText(intArray2Text(nums));
+        });
         sortMenu.getItems().add(miMergeSortAsc);
 
         MenuItem miMergeSortDsc = new MenuItem("Merge Sort Descending");
@@ -192,6 +230,17 @@ public class DataStructureTester extends Application {
          * Search Menu Section
          */
         MenuItem miSequentialSearch = new MenuItem("Sequential Search");
+        miSequentialSearch.setOnAction(e -> {
+            MyTimer.startMicroTime();
+            int[] nums = text2IntArray(taData.getText());
+            taStatus.setText("Converting text to array took " + MyTimer.stopMicroTime() + "us");
+            Scanner sc = new Scanner(System.in);
+            taStatus.appendText("\nEnter number to search for: ");
+            int key = sc.nextInt();
+            MyTimer.startMicroTime();
+            taStatus.appendText("\nSearch finished in " + MyTimer.stopMicroTime() + "us");
+            taStatus.appendText("\n" + key + "is at " + Searching.sequentialSearch(nums, key));
+        });
         searchMenu.getItems().add(miSequentialSearch);
 
         MenuItem miBinarySearch = new MenuItem("Binary Search");
